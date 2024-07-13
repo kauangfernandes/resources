@@ -14,9 +14,85 @@
 </head>
 <body onchange="">
 
-    <div class="conatiner">
+    <div class="container">
         <div class="row">
-            <i class="material-icons">star</i>
+
+            <div class="col-6">
+                <div class="">
+                    <div class="">
+                        <h2 class="display-5">Lorem Ipsum</h2>
+                    </div>
+    
+                    <span class="">
+                        <p>
+                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
+                            Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
+                            when an unknown printer took a galley of type and scrambled it to make a type 
+                            specimen book. It has survived not only five centuries, but also the leap into 
+                            electronic typesetting, remaining essentially unchanged.
+                        </p>
+                    </span>
+                </div>
+            </div>
+
+            <div class="col-6">
+                <form action="" method="post" class="py-4 px-4" onsubmit="validarForm(event)">
+                    <div class="">
+                        <label for="exampleFormControlTextarea1" class="form-label">Descreva aqui:</label>
+                        <textarea name="descricao" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                        <div id="descricao" class="msd_erro"></div>
+                    </div>
+
+                    <div>
+                        Avaliação:
+                    </div>
+                    <div class="">
+                        <div class="cont-stars d-flex">
+                            <div class="cont-star">
+                                <label for="star-0">
+                                    <i class="material-icons icon-star">star</i>
+                                </label>
+                                <input type="radio" name="input-star" class="stars" id="star-0" value="1" onchange="selectStar(this, true)">
+                            </div>
+
+                            <div class="cont-star">
+                                <label for="star-1">
+                                    <i class="material-icons icon-star">star</i>
+                                </label>
+                                <input type="radio" name="input-star" class="stars" id="star-1" value="2" onchange="selectStar(this, true)">
+                            </div>
+
+                            <div class="cont-star">
+                                <label for="star-2">
+                                    <i class="material-icons icon-star">star</i>
+                                </label>
+                                <input type="radio" name="input-star" class="stars" id="star-2" value="3" onchange="selectStar(this, true)">
+                            </div>
+
+                            <div class="cont-star">
+                                <label for="star-3">
+                                    <i class="material-icons icon-star">star</i>
+                                </label>
+                                <input type="radio" name="input-star" class="stars" id="star-3" value="4" onchange="selectStar(this, true)">
+                            </div>
+
+                            <div class="cont-star">
+                                <label for="star-4">
+                                    <i class="material-icons icon-star">star</i>
+                                </label>
+                                <input type="radio" name="input-star" class="stars" id="star-4" value="5" onchange="selectStar(this, true)">
+                            </div>
+                        </div>
+                        <div id="avaliacao" class="msd_erro"></div>
+                    </div>
+
+                    <div>
+                        <input class="btn btn-primary" type="reset" onclick="resetStar()" value="Resetar campos">
+                        <button class="btn btn-primary" type="submit">Enviar Avaliação</button>
+                    </div>
+                </form>
+            </div>
+
         </div>
     </div>
 
