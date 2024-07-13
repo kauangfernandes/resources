@@ -1,12 +1,6 @@
-let clickStar = false;
-
 function selectStar(input, bool){
     const stars = document.getElementsByClassName("material-icons");
     const selectedValue = parseInt(input.value);
-
-    if(clickStar != bool){
-        clickStar = true;
-    }
 
     for (let i = 0; i < stars.length; i++) {
         stars[i].classList.remove("icon-star-acitive");
@@ -17,13 +11,28 @@ function selectStar(input, bool){
             stars[i].classList.add("icon-star-acitive");
         }
     }
+}
 
+function resetStar() {
+    let inputStars = document.getElementsByName("input-star");
+    const stars = document.getElementsByClassName("material-icons");
+
+    inputStars.forEach(element => {
+        if(element > element.checked){
+            element.checked == false;
+        }
+    });
+
+    for (let i = 0; i < stars.length; i++) {
+        stars[i].classList.remove("icon-star-acitive");
+    }
 }
 
 function validarForm(event) {
     let descricao = document.getElementsByName("descricao")[0];
     let inputStars = document.getElementsByName("input-star");
     let avaliacao;
+    let erro_campos = false;
     
     inputStars.forEach(element => {
         if(element.checked){
@@ -31,18 +40,9 @@ function validarForm(event) {
         }
     });
 
-    //console.log(descricao);
-    //console.log(avaliacao);
+    if(isNaN(avaliacao) || avaliacao < 1 || avaliacao > 5){
+        erro_campos = true;
+    }
+
     event.preventDefault();
-}
-
-function resetStar() {
-    let inputStars = document.getElementsByName("input-star");
-
-    inputStars.forEach(element => {
-        if(element.checked){
-            element.checked == false;
-        }
-    });
-    console.log(inputStars);
 }

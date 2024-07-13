@@ -15,9 +15,8 @@
 <body onchange="">
 
     <div class="container">
-        <div class="row">
-
-            <div class="col-6 ">
+        <div class="row h100-vh align-content-center">
+            <div class="col-6">
                 <div class="py-4 px-4">
                     <div class="">
                         <h2 class="display-5">Lorem Ipsum</h2>
@@ -38,13 +37,13 @@
             <div class="col-6">
                 <form action="" method="post" class="py-4 px-4" onsubmit="validarForm(event)">
                     <div class="">
-                        <label for="exampleFormControlTextarea1" class="form-label">Descreva aqui:</label>
-                        <textarea name="descricao" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                        <label for="exampleFormControlTextarea1" class="form-label">Avaliação</label>
+                        <textarea name="avaliacao" class="form-control" id="exampleFormControlTextarea1" rows="3" cols=""></textarea>
                         <div id="descricao" class="msd_erro"></div>
                     </div>
 
                     <div>
-                        Avaliação:
+                        Nivel satisfação:
                     </div>
                     <div class="">
                         <div class="cont-stars d-flex">
@@ -52,42 +51,42 @@
                                 <label for="star-0">
                                     <i class="material-icons icon-star">star</i>
                                 </label>
-                                <input type="radio" name="input-star" class="stars" id="star-0" value="1" onchange="selectStar(this, true)">
+                                <input type="radio" name="input-star" class="stars" id="star-0" value="1" onclick="selectStar(this, true)">
                             </div>
 
                             <div class="cont-star">
                                 <label for="star-1">
                                     <i class="material-icons icon-star">star</i>
                                 </label>
-                                <input type="radio" name="input-star" class="stars" id="star-1" value="2" onchange="selectStar(this, true)">
+                                <input type="radio" name="input-star" class="stars" id="star-1" value="2" onclick="selectStar(this, true)">
                             </div>
 
                             <div class="cont-star">
                                 <label for="star-2">
                                     <i class="material-icons icon-star">star</i>
                                 </label>
-                                <input type="radio" name="input-star" class="stars" id="star-2" value="3" onchange="selectStar(this, true)">
+                                <input type="radio" name="input-star" class="stars" id="star-2" value="3" onclick="selectStar(this, true)">
                             </div>
 
                             <div class="cont-star">
                                 <label for="star-3">
                                     <i class="material-icons icon-star">star</i>
                                 </label>
-                                <input type="radio" name="input-star" class="stars" id="star-3" value="4" onchange="selectStar(this, true)">
+                                <input type="radio" name="input-star" class="stars" id="star-3" value="4" onclick="selectStar(this, true)">
                             </div>
 
                             <div class="cont-star">
                                 <label for="star-4">
                                     <i class="material-icons icon-star">star</i>
                                 </label>
-                                <input type="radio" name="input-star" class="stars" id="star-4" value="5" onchange="selectStar(this, true)">
+                                <input type="radio" name="input-star" class="stars" id="star-4" value="5" onclick="selectStar(this, true)">
                             </div>
                         </div>
                         <div id="avaliacao" class="msd_erro"></div>
                     </div>
 
                     <div>
-                        <input class="btn btn-primary" type="reset" onclick="resetStar()" value="Resetar campos">
+                        <input class="btn btn-primary" type="reset" onclick="resetStar()" value="Limpas campos">
                         <button class="btn btn-primary" type="submit">Enviar Avaliação</button>
                     </div>
                 </form>
