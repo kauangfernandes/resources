@@ -1,0 +1,55 @@
+:root{
+    --cor--amarela: #fff000;
+    --cor--preta: #000000;
+}
+
+.h100-vh{
+    height: 100vh;
+}
+
+.cont-star{
+    min-width: 50px;
+    min-height: 50px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.icon-star{
+    font-size: 2em;
+}
+
+.icon-star-acitive{
+    color: var(--cor--amarela) !important;
+}
+
+.icon-star:hover{
+    cursor: pointer;
+    animation-name: star;
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+}
+
+@keyframes star{
+    0% { 
+        transform: translateY(0);
+    }
+    50% { 
+        transform: translateY(-5px); 
+        color: var(--cor--amarela);
+    }
+    100% { 
+        transform: translateY(0);
+    }
+}
+
+input[type='radio']{
+    display: none !important;
+}
+
+input[type='radio']::before, input[type='radio']::after{
+    width: 0px;
+    height: 0px;
+    display: none;
+}
