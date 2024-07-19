@@ -107,7 +107,7 @@ function executar() {
             
             
             if(parametro == parametros && valor == values){
-                printConsole("Encontrou");
+                reloader(parametros, values);
             } else {
                 printConsole("Não encontrou");
             }
@@ -115,6 +115,9 @@ function executar() {
     }
 }
 
+function reloader(parametro, valor) {
+    document.location = `getParametros.html?${parametro}=${valor}`;
+}
 
 function getParametros() {
     const location = window.location;
