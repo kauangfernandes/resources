@@ -1,10 +1,11 @@
 let parametro = "";
-let valor = "";
+let value = "";
 let erro = false;
 
-const collection = Array(
+const collectionsParameters = Array(
     ['login', true],
     ['login', false],
+    ['modal', 'show']
 );
 
 
@@ -14,12 +15,12 @@ function carregarTablea() {
     let tdparam = document.createElement("td");
     let tdvalue = document.createElement("td");
 
-    for (let i = 0; i < collection.length; i++) {
+    for (let i = 0; i < collectionsParameters.length; i++) {
         let tr = document.createElement("tr");
         let tdparam = document.createElement("td");
         let tdvalue = document.createElement("td");
 
-        const element = collection[i];
+        const element = collectionsParameters[i];
         const parametro = document.createTextNode(element[0]);
         const value = document.createTextNode(element[1]);
 
@@ -41,11 +42,11 @@ parametroInput.addEventListener("keydown", function (event) {
     }
 });
 
-const valorInput = document.querySelector("#valor");
-valorInput.addEventListener("keydown", function (event) {
+const valueInput = document.querySelector("#value");
+valueInput.addEventListener("keydown", function (event) {
     if(event.key === "Enter"){
-        valor = valorInput.value;
-        printConsole(valor);
+        value = valueInput.value;
+        printConsole(value);
     }else{
         console.clear();
     }
@@ -57,9 +58,9 @@ function reset() {
         parametro = null;
     }
 
-    if (valorInput.value.length > 0) {
-        valorInput.value = null;
-        valor = null;
+    if (valueInput.value.length > 0) {
+        valueInput.value = null;
+        value = null;
     }
 }
 
@@ -70,7 +71,7 @@ function printConsole(params) {
 function executar() {
     const campoErros = document.querySelectorAll(".erro");
     parametro = parametroInput.value;
-    valor = valorInput.value;
+    value = valueInput.value;
 
 
     if(parametro.length <= 0){
@@ -85,7 +86,7 @@ function executar() {
         erro = true;
     }
 
-    if(valor.length <= 0){
+    if(value.length <= 0){
         let texto = campoErros[1].lastChild
 
         if(texto != null){
@@ -100,13 +101,12 @@ function executar() {
 
     if(!erro){
 
-        for (let i = 0; i < collection.length; i++) {
-            const element = collection[i];
+        for (let i = 0; i < collectionsParameters.length; i++) {
+            const element = collectionsParameters[i];
             const parametros = element[0].toString();
             const values = element[1].toString();
             
-            
-            if(parametro == parametros && valor == values){
+            if(parametro == parametros && value == values){
                 reloader(parametros, values);
             } else {
                 printConsole("Não encontrou");
@@ -115,18 +115,22 @@ function executar() {
     }
 }
 
-function reloader(parametro, valor) {
-    document.location = `getParametros.html?${parametro}=${valor}`;
+function reloader(parametro, value) {
+    document.location = `getParametros.html?${parametro}=${value}`;
 }
 
 function getParametros() {
-    const location = window.location;
-    const href = window.location.href;
-    const query = window.location.search;
+    const query = window.location.search.replace(/\?/, "");
+    const parametros = query.split("&");
 
-    //document.location = "getParametros.html?nome=kauan";
+    parametros.forEach( parametro =>{
+        const parametroUrl = parametro.split("=")[0].toString();
+        const valueUrl = parametro.split("=")[1].toString();
 
-    //console.log(location);
-    // console.log(href);
-    // console.log(query);
+        collectionsParameters.forEach( collection => {
+            if((parametroUrl == collection[0].toString()) && (valueUrl == collection[1].toString())){
+                console.log();
+            }
+        });
+    });
 }
