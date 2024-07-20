@@ -9,7 +9,7 @@ const collectionsParameters = Array(
 );
 
 
-function carregarTablea() {
+function carregarTabela() {
     const tbody = document.querySelector("#tbody");
     let tr = document.createElement("tr");
     let tdparam = document.createElement("td");
@@ -124,13 +124,48 @@ function getParametros() {
     const parametros = query.split("&");
 
     parametros.forEach( parametro =>{
-        const parametroUrl = parametro.split("=")[0].toString();
-        const valueUrl = parametro.split("=")[1].toString();
+        let parametroUrl = "";
+        let valueUrl = "";
+        let erro = false;
 
-        collectionsParameters.forEach( collection => {
-            if((parametroUrl == collection[0].toString()) && (valueUrl == collection[1].toString())){
-                console.log();
-            }
-        });
+        if((parametro.split("=")[0] != null) && (parametro.split("=")[1] != null)){
+            parametroUrl = parametro.split("=")[0].toString();
+            valueUrl = parametro.split("=")[1].toString();
+        } else {
+            erro = true;
+        }
+
+        if(!erro){
+            let bool = false;
+            collectionsParameters.forEach( collection => {
+                if((parametroUrl == collection[0].toString()) && (valueUrl == collection[1].toString())){
+                    bool = true;
+                }
+            });
+
+            carregarTabelaParametrosCapturados(parametroUrl, valueUrl, bool);
+        }
     });
+}
+
+function carregarTabelaParametrosCapturados(parametro, value, bool){
+    const tbody = document.querySelector("#tbody-params-cap");
+    let tr = document.createElement("tr");
+
+    if(bool){
+        tr.classList.add("table-success");
+    }
+
+    let tdparam = document.createElement("td");
+    let tdvalue = document.createElement("td");
+    
+    let textoParametro = document.createTextNode(parametro);
+    let textoValue = document.createTextNode(value);
+
+    tdparam.appendChild(textoParametro);
+    tdvalue.appendChild(textoValue);
+
+    tr.appendChild(tdparam);
+    tr.appendChild(tdvalue);
+    tbody.appendChild(tr);
 }
