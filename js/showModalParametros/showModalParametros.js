@@ -1,65 +1,141 @@
 const body = document.querySelector("#body");
 
-const collectionsMessagesModal = Array(
-    ['modal', 'show'],
-    ['modal', 'loader'],
+const collectionsModal = Array(
     ['login', 'success', 'Login realizado com sucesso.', 'Seu login foi realizado com sucesso clique em continuar.'],
     ['login', 'faled', 'Acesso negado.', 'Seu login falhou.']
 );
 
+const collectionsModalSpinner = Array(
+    ['login', 'faled', 'Login falhou.', 'Seu login falhou.']
+);
 
-function showModalParameters() {
-    const parametrosUrl = getParametros();
-    let countParams = 0;
 
-    let action = "";
-    let parametro = "";
-    let value = "";
 
-    if(parametrosUrl != false){
-        parametrosUrl.forEach(paramstUrl => {
-            collectionsMessagesModal.forEach(collection => {
-                if((collection[0].toString() == paramstUrl.split("=")[0]) && (collection[1].toString() == paramstUrl.split("=")[1])){
-                    countParams = countParams + 1;
+function validationParameters() {
+    const parametersUrl = getAllParameters();
 
-                    let modal = document.querySelector("#modal");
+    if(parametersUrl){
 
-                    if(collection[0].toString() == "modal" && collection[1].toString() == "show"){
-                        modal.classList.add(collection[1].toString());
-                        modal.classList.add('d-block');
+        parametersUrl.forEach(parameterUrl => {
+            /*---------Modal---------*/
+            if(parameterUrl.split("=")[0].toString() == "modal"){
+                let collection = null;
+                let type = "default";
+
+                if(parametersUrl.length > 1){
+                    const modal = document.querySelector("#modal");
+                    if(parameterUrl.split("=")[1].toString() == "spinner"){
+                        collection = getParameters(parametersUrl, collectionsModalSpinner);
+                        type = "spinner";
                     } else {
-                        let title = document.querySelector("#myTitle");
-                        text = title.firstChild
-                        title.removeChild(text);
-                        text = document.createTextNode(collection[2]);
-                        title.appendChild(text);
+                        collection = getParameters(parametersUrl, collectionsModal);
+                    }
 
-                        let body = document.querySelector("#modal-body");
-                        text = body.lastChild;
-                        body.removeChild(text);
-                        text = document.createTextNode(collection[3]);
-                        body.appendChild(text);
-                    };
+                    createModal(modal, collection, type);
                 }
-            });
+            }
+
+            /*---------Others---------*/
         });
 
-        if(countParams > 1){
-            showModal();
-        }
+    } else {
+        console.info("Nehum parâmetros encontrado.");
     }
 }
 
-function showModal(modal, action, title, body) {
-    
+function getParameters(parametersUrl, collection) {
+    let row = false;
+
+    parametersUrl.forEach(parameterUrl => {
+        collection.forEach(paramCollection => {
+            if((parameterUrl.split("=")[0] == paramCollection[0]) && (parameterUrl.split("=")[1] == paramCollection[1])){
+                row = paramCollection;
+            }
+        });
+    });
+
+    return row;
 }
 
-function getParametros() {
-    const query = window.location.search.replace(/\?/, "");
-    const parametros = query.split("&");
+function createModal(modal, paramCollection, type) {
 
-    if(parametros.length >= 0 && parametros['0'].length){
-        return parametros;
+    if(type == "spinner"){
+        const closeButton = modal.querySelector('.btn-close');
+        const headerModal = modal.querySelector('#modal-header');
+        headerModal.removeChild(closeButton);
+
+        const closeConinue = modal.querySelector('.btn-continue');
+        const footerModal = modal.querySelector('#modal-footer');
+        footerModal.removeChild(closeConinue);
+
+        const divSpinner = document.createElement("div");
+        divSpinner.classList.add("d-flex", "align-items-center", "w-100");
+        footerModal.appendChild(divSpinner);
+
+        const strong = document.createElement("strong");
+        let text = document.createTextNode("Loading...");
+        strong.setAttribute("role", "status");
+        strong.appendChild(text);
+
+        const div = document.createElement("div");
+        div.classList.add("spinner-border", "ms-auto");
+        div.setAttribute("aria-hidden", "true");
+
+        footerModal.appendChild(divSpinner);
+        divSpinner.appendChild(strong);
+        divSpinner.appendChild(div);
+
+        const titleModal = modal.querySelector("#myTitle");
+        text = titleModal.firstChild
+        titleModal.removeChild(text);
+        text = document.createTextNode(paramCollection[2]);;
+        titleModal.appendChild(text);
+
+        const bodyModal = modal.querySelector("#modal-body");
+        let content = bodyModal.childNodes;
+
+        content.forEach(element => {
+            bodyModal.removeChild(element);
+        });
+
+        text = document.createTextNode(paramCollection[3]);
+        span = document.createElement("span");
+        span.setAttribute("id", "time-spinner");
+
+        bodyModal.appendChild(text);
+
+    } else {
+        let titleModal = modal.querySelector("#myTitle");
+        text = titleModal.firstChild
+        titleModal.removeChild(text);
+        text = document.createTextNode(paramCollection[2]);;
+        titleModal.appendChild(text);
+
+        const bodyModal = modal.querySelector("#modal-body");
+        let content = bodyModal.childNodes;
+
+        content.forEach(element => {
+            bodyModal.removeChild(element);
+        });
+
+        text = document.createTextNode(paramCollection[3]);
+        bodyModal.appendChild(text);
+    }
+
+    showModal(modal)
+}
+
+function showModal(modal) {
+    modal.classList.add("show");
+    modal.classList.add('d-block');
+}
+
+function getAllParameters() {
+    const query = window.location.search.replace(/\?/, "");
+    const parameters = query.split("&");
+
+    if (parameters.length >= 0 && parameters['0'].length) {
+        return parameters;
     } else {
         return false;
     }
@@ -84,10 +160,3 @@ closeConinue.addEventListener('click', function () {
     modal.classList.remove('d-block');
     modal.classList.add('none');
 });
-
-/*
-<div class="d-flex align-items-center">
-  <strong role="status">Loading...</strong>
-  <div class="spinner-border ms-auto" aria-hidden="true"></div>
-</div>
-*/
