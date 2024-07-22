@@ -99,10 +99,13 @@ function createModal(modal, paramCollection, type) {
         });
 
         text = document.createTextNode(paramCollection[3]);
-        span = document.createElement("span");
-        span.setAttribute("id", "time-spinner");
+        divTtime = document.createElement("div");
+        divTtime.setAttribute("id", "time-spinner");
 
         bodyModal.appendChild(text);
+        bodyModal.appendChild(divTtime);
+
+        closeModalSpiner(modal, 10);
 
     } else {
         let titleModal = modal.querySelector("#myTitle");
@@ -160,3 +163,33 @@ closeConinue.addEventListener('click', function () {
     modal.classList.remove('d-block');
     modal.classList.add('none');
 });
+
+function closeModalSpiner(modal, params) {
+    const timeParams  = params;
+    let time = params + 1;
+
+    const timeSpinner = modal.querySelector("#time-spinner");
+
+    const closeModalSpiner = setInterval(() => {
+        time = time - 1;
+        contentText = timeSpinner.firstChild;
+
+        if(contentText != null){
+            timeSpinner.removeChild(contentText);
+        }
+ 
+        content = document.createTextNode(`Aguarde: ${time}s`);
+        timeSpinner.appendChild(content);
+
+        if(time <= 0){
+            clearInterval(closeModalSpiner);
+            modal.classList.remove('show');
+            modal.setAttribute('aria-modal', 'false');
+            modal.setAttribute('data-bs-backdrop', '');
+            modal.setAttribute('data-bs-keyboard', '');
+            modal.classList.remove('d-block');
+            modal.classList.add('none');
+        }
+    }, 1000);
+
+}
