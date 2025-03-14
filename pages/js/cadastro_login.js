@@ -1,29 +1,26 @@
-const switchesCadastroLogin = document.querySelectorAll('.switches-cadastro-login');
-switchesCadastroLogin.forEach((switchElement) => {
+getInputElements();
 
-    if(switchElement.hasAttribute('checked')){
-        const container =  `container-${switchElement.value}`;
-        const elementContainer = document.querySelector(`#${container}`);
-
-        if(elementContainer.hasAttribute('hidden')){
-            elementContainer.removeAttribute('hidden')
+function getInputElements() {
+    const switchesCadastroLogin = document.querySelectorAll('[name="switches-cadastro-login"]');
+    switchesCadastroLogin.forEach((element) => {
+        if (element.hasAttribute('checked')) {
+            switchContainer(element);
         }
-    }
-});
+    });
+}
 
-
-function switchContainer(inputElement){
+function switchContainer(inputElement) {
     const containers = document.querySelectorAll('.containers');
     containers.forEach(container => {
-        if(!container.hasAttribute('hidden')){
+        if (!container.hasAttribute('hidden')) {
             container.setAttribute('hidden', '');
         }
     });
 
-    const container =  `container-${inputElement.value}`;
+    const container = `container-${inputElement.value}`;
     const elementContainer = document.querySelector(`#${container}`);
 
-    if(elementContainer.hasAttribute('hidden')){
-        elementContainer.removeAttribute('hidden')
+    if (elementContainer.hasAttribute('hidden')) {
+        elementContainer.removeAttribute('hidden');
     }
 }
